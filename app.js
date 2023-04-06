@@ -50,6 +50,18 @@ app.post("/", (req, res) => {
     )
     .catch((error) => console.log(error));
 });
+app.get("/:shortURL", (req, res) => {
+  const { shortURL } = req.params;
+  URL.findOne({ shortURL })
+    .then((data) => {
+      if (data) {
+        return res.redirect(data.originalURL);
+      } else {
+        return res.render("error");
+      }
+    })
+    .catch((error) => console.log(error));
+});
 
 app.listen(3000, (req, res) => {
   console.log("this app is listening on http://localhost:3000");
